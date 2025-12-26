@@ -302,20 +302,12 @@ Faz isso pra todos e tira a média.
   "heatmap-temporal": {
     id: "heatmap-temporal",
     name: "Heatmap (Dia x Hora)",
-    shortDescription: "Conta quantas mensagens chegaram em cada dia da semana + hora do dia. Faz um grid: segunda 8h teve X mensagens, terça 15h teve Y mensagens. Mostra onde tem mais movimento.",
-    fullDescription: "Agregação simples. Cria uma matriz 7x24 e preenche com count(*).",
+    shortDescription: "Cálculo\nAgrupa TODAS as mensagens por dia da semana + hora. Faz distribuição percentual de volume. Separa mensagens RECEBIDAS (do buyer) vs ENVIADAS (do seller).",
+    fullDescription: "Análise de densidade temporal das mensagens recebidas para identificar horários de pico e gargalos de atendimento.",
     calculation: {
-      formula: "GROUP BY day_of_week, hour_of_day COUNT(*)",
-      dataSources: ["messages (inbound)"],
-      example: `
-Msg 1: Seg, 10:00
-Msg 2: Seg, 10:15
-Msg 3: Ter, 14:00
-
-Output:
-Seg-10h: 2
-Ter-14h: 1
-      `
+      formula: "GROUP BY messages.day_of_week, messages.hour, messages.direction",
+      dataSources: ["messages"],
+      example: "Visualização baseada em volume relativo."
     }
   },
 
