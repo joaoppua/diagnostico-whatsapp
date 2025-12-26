@@ -4,10 +4,10 @@ import { InsightCard } from '../ui/InsightCard';
 import { mockData } from '../../data/mockData';
 import { TooltipIcon } from '../ui/TooltipIcon';
 
-function FunnelStage({ label, count, percentage, time, dropoff, color, tooltipContent }: any) {
+function FunnelStage({ label, count, percentage, time, dropoff, color, metricId }: any) {
     return (
-        <div className="relative group">
-            <TooltipIcon content={tooltipContent} />
+        <div className="relative group hover:z-50 transition-all">
+            <TooltipIcon metricId={metricId} />
             <div className="flex items-center gap-4 mb-2">
                 <div className="flex-1 h-12 rounded-r-full flex items-center px-4 relative overflow-visible" 
                      style={{ 
@@ -63,7 +63,7 @@ export function FunilVendasSection() {
                         time={stage.time}
                         dropoff={stage.dropoff ? `${stage.dropoff}%` : null}
                         color={stage.color}
-                        tooltipContent={`DADOS: ${stage.name}`}
+                        metricId="funil-vendas"
                     />
                 ))}
             </div>
@@ -75,7 +75,7 @@ export function FunilVendasSection() {
               icon={<AlertCircle />}
               title="Gargalo Crítico Identificado"
               description={mockData.funnel.criticalBottleneck}
-              tooltipContent="CÁLCULO: IA identifica etapa com maior abandono."
+              metricId="funil-vendas"
             />
             
             <InsightCard
@@ -83,7 +83,7 @@ export function FunilVendasSection() {
               icon={<AlertTriangle />}
               title="Problema de Qualificação"
               description="24.6% de abandono na fase de qualificação. Você está fazendo perguntas que afastam em vez de engajar."
-              tooltipContent="CÁLCULO: Dropoff rate entre engajamento e qualificação."
+              metricId="funil-vendas"
             />
             
             <InsightCard
@@ -91,6 +91,7 @@ export function FunilVendasSection() {
               icon={<CheckCircle />}
               title="Ponto Forte"
               description="Sua taxa de fechamento após negociação (74.2%) está acima da média. O problema está antes."
+              metricId="conversao-atual"
             />
             
             <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6">

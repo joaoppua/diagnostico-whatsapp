@@ -3,10 +3,10 @@ import { Check, Star } from 'lucide-react';
 import { mockData } from '../../data/mockData';
 import { TooltipIcon } from '../ui/TooltipIcon';
 
-function OpportunityCard({ rank, title, description, impact, ease, timeToResult, tooltipContent }: any) {
+function OpportunityCard({ rank, title, description, impact, ease, timeToResult, metricId }: any) {
     return (
-        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 flex flex-col md:flex-row items-center gap-6 hover:border-[#FF5C35]/50 transition-all relative group">
-            {tooltipContent && <TooltipIcon content={tooltipContent} />}
+        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 flex flex-col md:flex-row items-center gap-6 hover:border-[#FF5C35]/50 transition-all relative group hover:z-50">
+            {metricId && <TooltipIcon metricId={metricId} />}
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[#FF5C35] to-[#FF8A5F] text-white font-bold text-xl shrink-0 shadow-lg shadow-[#FF5C35]/20">
                 {rank}
             </div>
@@ -51,7 +51,7 @@ export function OportunidadesSection() {
                 <OpportunityCard 
                     key={idx} 
                     {...opp} 
-                    tooltipContent={idx === 0 ? "CÁLCULO: Impacto = (conversão_potencial - conversão_atual) × volume × ticket_médio." : undefined}
+                    metricId={idx === 0 ? "oportunidades" : undefined}
                 />
             ))}
         </div>

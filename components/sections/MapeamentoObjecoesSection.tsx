@@ -2,11 +2,11 @@ import React from 'react';
 import { mockData } from '../../data/mockData';
 import { TooltipIcon } from '../ui/TooltipIcon';
 
-function ObjectionCard({ rank, objection, frequency, conversionAfter, currentResponse, suggestedResponse, tooltipContent }: any) {
+function ObjectionCard({ rank, objection, frequency, conversionAfter, currentResponse, suggestedResponse, metricId }: any) {
     return (
-        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 flex flex-col md:flex-row gap-6 hover:border-[#FF5C35]/40 transition-colors relative">
+        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 flex flex-col md:flex-row gap-6 hover:border-[#FF5C35]/40 transition-colors relative hover:z-50">
             <div className="absolute top-4 right-4">
-                 {tooltipContent && <TooltipIcon content={tooltipContent} />}
+                 <TooltipIcon metricId={metricId} />
             </div>
             <div className="flex flex-col items-center justify-center min-w-[80px]">
                 <div className="w-12 h-12 rounded-full bg-[#FF5C35]/10 flex items-center justify-center text-[#FF5C35] font-bold text-xl border border-[#FF5C35]/20">
@@ -52,7 +52,7 @@ export function MapeamentoObjecoesSection() {
                 <ObjectionCard 
                     key={idx} 
                     {...obj} 
-                    tooltipContent={idx === 0 ? "CÁLCULO: IA extrai objeções das conversas. Agrupa similares. Ranqueia por frequência." : undefined}
+                    metricId={idx === 0 ? "objecoes" : undefined}
                 />
             ))}
         </div>

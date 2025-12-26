@@ -1,8 +1,10 @@
+
 import React from 'react';
-import { DollarSign, Target, Users, Clock, Star } from 'lucide-react';
+import { DollarSign, Target, Users, Clock, Star, CalendarRange, MessageSquare, CalendarCheck } from 'lucide-react';
 import { ResponsiveContainer, RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
 import { mockData } from '../../data/mockData';
 import { MetricCard } from '../ui/MetricCard';
+import { TooltipIcon } from '../ui/TooltipIcon';
 
 export function HeroSection() {
   const scoreData = [{ name: 'Score', value: mockData.summary.score, fill: '#FF5C35' }];
@@ -13,17 +15,37 @@ export function HeroSection() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(255,92,53,0.15)_0%,transparent_50%)] pointer-events-none" />
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <h1 className="text-4xl md:text-7xl font-bold text-center mb-4 text-white">
+        <h1 className="text-4xl md:text-7xl font-bold text-center mb-8 text-white">
           Diagnóstico de Vendas <span className="text-[#FF5C35]">WhatsApp</span>
         </h1>
         
-        <p className="text-lg md:text-xl text-[#B8B8B8] text-center mb-12">
-          {mockData.summary.totalConversations} conversas analisadas nos últimos {mockData.summary.periodDays} dias
-        </p>
+        {/* Metadata Bar */}
+        <div className="flex flex-col items-center justify-center gap-3 mb-12">
+            <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6">
+                <div className="flex items-center gap-2 bg-[#1A1A1A]/60 backdrop-blur-sm border border-[#FF5C35]/20 px-4 py-2 rounded-full text-sm text-[#B8B8B8]">
+                    <MessageSquare size={16} className="text-[#FF5C35]" />
+                    <span className="font-medium text-white">1.984</span> conversas analisadas
+                </div>
+                
+                <div className="flex items-center gap-2 bg-[#1A1A1A]/60 backdrop-blur-sm border border-[#FF5C35]/20 px-4 py-2 rounded-full text-sm text-[#B8B8B8]">
+                    <CalendarRange size={16} className="text-[#FF5C35]" />
+                    Período de análise: <span className="text-white">{mockData.summary.analysisPeriod}</span>
+                </div>
+            </div>
+
+            <div className="flex items-center gap-2 bg-[#1A1A1A]/60 backdrop-blur-sm border border-[#FF5C35]/20 px-4 py-2 rounded-full text-sm text-[#B8B8B8]">
+                <CalendarCheck size={16} className="text-[#FF5C35]" />
+                Relatório gerado em: <span className="text-white">{mockData.summary.analysisDate}</span>
+            </div>
+        </div>
         
         {/* Card do Score Principal - Glass Effect */}
-        <div className="max-w-4xl mx-auto bg-[#1A1A1A]/40 backdrop-blur-xl rounded-3xl border border-[#FF5C35]/20 p-8 md:p-12 shadow-2xl mb-12 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF5C35]/50 to-transparent opacity-50"></div>
+        <div className="max-w-4xl mx-auto bg-[#1A1A1A]/40 backdrop-blur-xl rounded-3xl border border-[#FF5C35]/20 p-8 md:p-12 shadow-2xl mb-12 relative hover:z-50 transition-all">
+          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF5C35]/50 to-transparent opacity-50"></div>
+          </div>
+          
+          <TooltipIcon metricId="score-saude" />
           
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
             {/* Medidor Circular */}
@@ -56,8 +78,7 @@ export function HeroSection() {
                 Precisa de <span className="text-[#FF3B30]">Atenção Urgente</span>
               </h2>
               <p className="text-base md:text-lg text-[#B8B8B8] mb-4">
-                Você está deixando <span className="text-[#FF3B30] font-bold">R$ {mockData.summary.revenueNotCaptured.toLocaleString('pt-BR')}</span> na mesa todo mês. 
-                Este relatório revela exatamente como recuperar esse valor.
+                Você está deixando <span className="text-[#FF3B30] font-bold">R$ {mockData.summary.revenueNotCaptured.toLocaleString('pt-BR')}</span> na mesa.
               </p>
               <div className="flex items-center justify-center md:justify-start gap-2">
                 <Star className="fill-[#FFD700] text-[#FFD700]" size={20} />
@@ -65,7 +86,6 @@ export function HeroSection() {
                 <Star className="fill-[#FFD700] text-[#FFD700]" size={20} />
                 <Star className="text-[#4A4A4A]" size={20} />
                 <Star className="text-[#4A4A4A]" size={20} />
-                <span className="text-sm text-[#808080] ml-2">Potencial para 5 estrelas</span>
               </div>
             </div>
           </div>
@@ -77,10 +97,8 @@ export function HeroSection() {
             icon={<DollarSign />}
             label="RECEITA NÃO CAPTURADA"
             value={`R$ ${mockData.summary.revenueNotCaptured.toLocaleString('pt-BR')}`}
-            subtitle="Por mês"
-            trend="down"
-            trendValue="-52%"
-            tooltipContent="CÁLCULO: Soma do valor de todos os deals com status 'perdido' + deals 'em negociação'. DADOS: SUM(deals.value WHERE status IN ('perdido','em_negociacao'))"
+            subtitle="No período"
+            metricId="receita-nao-capturada"
           />
           
           <MetricCard
@@ -88,9 +106,7 @@ export function HeroSection() {
             label="CONVERSÃO ATUAL"
             value={`${mockData.summary.currentConversion}%`}
             subtitle={`Potencial: ${mockData.summary.potentialConversion}%`}
-            trend="up"
-            trendValue="+2.3%"
-            tooltipContent="CÁLCULO: (Total deals fechados / Total leads) × 100. DADOS: COUNT(deals WHERE status='aprovado') / COUNT(total_deals)"
+            metricId="conversao-atual"
           />
           
           <MetricCard
@@ -98,8 +114,7 @@ export function HeroSection() {
             label="LEADS RECUPERÁVEIS"
             value={mockData.summary.recoverableLeads.toString()}
             subtitle={`Potencial: R$ ${mockData.summary.recoverableValue.toLocaleString('pt-BR')}`}
-            trend="neutral"
-            tooltipContent="CÁLCULO: Deals em negociação há 3+ dias sem resposta com score recuperabilidade >60%. DADOS: COUNT(deals WHERE status='em_negociacao' AND inactive_days>3)"
+            metricId="leads-recuperaveis"
           />
           
           <MetricCard
@@ -107,9 +122,7 @@ export function HeroSection() {
             label="CICLO DE VENDA"
             value={`${mockData.summary.salesCycle} dias`}
             subtitle="Média até fechamento"
-            trend="down"
-            trendValue="-0.8d"
-            tooltipContent="CÁLCULO: Média da diferença entre primeira mensagem e última quando status='aprovado'. DADOS: AVG(last_msg_date - first_msg_date WHERE status='aprovado')"
+            metricId="ciclo-venda"
           />
         </div>
       </div>

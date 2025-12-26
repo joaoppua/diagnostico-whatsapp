@@ -9,13 +9,13 @@ interface ScoreCardProps {
   score: number;
   maxScore: number;
   color: string;
-  tooltipContent: string;
+  metricId?: string;
 }
 
-const ScoreCard: React.FC<ScoreCardProps> = ({ label, score, maxScore, color, tooltipContent }) => {
+const ScoreCard: React.FC<ScoreCardProps> = ({ label, score, maxScore, color, metricId }) => {
     return (
-        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 relative">
-            <TooltipIcon content={tooltipContent} />
+        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 relative hover:z-50 transition-all">
+            <TooltipIcon metricId={metricId} />
             <div className="flex justify-between mb-2">
                 <span className="font-semibold text-white">{label}</span>
                 <span className="font-bold text-xl" style={{color}}>{score}/{maxScore}</span>
@@ -31,17 +31,17 @@ interface RedFlagCardProps {
   title: string;
   description: string;
   severity: 'high' | 'medium';
-  tooltipContent: string;
+  metricId?: string;
 }
 
-const RedFlagCard: React.FC<RedFlagCardProps> = ({ title, description, severity, tooltipContent }) => {
+const RedFlagCard: React.FC<RedFlagCardProps> = ({ title, description, severity, metricId }) => {
     const borderColor = severity === 'high' ? 'border-[#FF3B30]/30' : 'border-[#FFD60A]/30';
     const textColor = severity === 'high' ? 'text-[#FF3B30]' : 'text-[#FFD60A]';
     const bgColor = severity === 'high' ? 'bg-[#FF3B30]/5' : 'bg-[#FFD60A]/5';
     
     return (
-        <div className={`${bgColor} backdrop-blur-md border ${borderColor} rounded-xl p-4 relative`}>
-            <TooltipIcon content={tooltipContent} />
+        <div className={`${bgColor} backdrop-blur-md border ${borderColor} rounded-xl p-4 relative hover:z-50 transition-all`}>
+            <TooltipIcon metricId={metricId} />
             <h5 className={`${textColor} font-bold mb-1 text-sm uppercase`}>{title}</h5>
             <p className="text-sm text-[#B8B8B8]">{description}</p>
         </div>
@@ -77,25 +77,25 @@ export function AnaliseComunicacaoSection() {
               score={mockData.communication.scores.professionalism}
               maxScore={10}
               color="#FF5C35"
-              tooltipContent="CÁLCULO: IA analisa tom, vocabulário e estrutura."
+              metricId="comunicacao-scores"
             />
             <ScoreCard
               label="Empatia"
               score={mockData.communication.scores.empathy}
               maxScore={10}
               color="#FF3B30"
-              tooltipContent="CÁLCULO: IA avalia calor humano e compreensão."
+              metricId="comunicacao-scores"
             />
             <ScoreCard
               label="Clareza"
               score={mockData.communication.scores.clarity}
               maxScore={10}
               color="#00E676"
-              tooltipContent="CÁLCULO: IA mede objetividade e simplicidade."
+              metricId="comunicacao-scores"
             />
           </div>
           
-          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 relative">
+          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 relative hover:z-50 transition-all">
             <TooltipIcon content="CÁLCULO: IA faz análise de sentimento mensagem a mensagem." />
             <h3 className="text-2xl font-semibold mb-6 text-white">Sentimento da Conversa</h3>
             <div className="h-64">
@@ -129,7 +129,7 @@ export function AnaliseComunicacaoSection() {
                             `Você faz apenas ${flag.avg} perguntas por conversa, ideal seria ${flag.ideal}`
                         }
                         severity={flag.type === 'insecurity' || flag.type === 'timing' ? 'high' : 'medium'}
-                        tooltipContent="CÁLCULO: IA analisa padrões baseados em benchmarks."
+                        metricId="comunicacao-scores"
                     />
                 ))}
             </div>

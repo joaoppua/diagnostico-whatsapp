@@ -45,8 +45,8 @@ export function TempoRespostaSection() {
           </div>
           
           <div className="space-y-4">
-            <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 relative">
-              <TooltipIcon content="CÁLCULO: Média do tempo de primeira resposta." />
+            <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 relative hover:z-50 transition-all">
+              <TooltipIcon metricId="tempo-resposta" />
               <p className="text-sm uppercase tracking-wider text-[#808080] mb-2">Seu Tempo Médio</p>
               <p className="text-5xl font-bold text-[#FF3B30] mb-2">{mockData.responseTime.average}</p>
               <p className="text-sm text-[#B8B8B8]">Benchmark do setor: {mockData.responseTime.benchmark}</p>
@@ -57,10 +57,10 @@ export function TempoRespostaSection() {
               icon={<AlertCircle />}
               title="Perda Calculada"
               description={`Você perdeu R$ ${mockData.responseTime.lostRevenue} em vendas por responder após 1h. Cada minuto de atraso reduz a conversão em 2.3%.`}
-              tooltipContent="CÁLCULO: Soma deals perdidos onde response_time>1h."
+              metricId="tempo-resposta"
             />
             
-            <div className="bg-[#FF3B30]/5 backdrop-blur-md border border-[#FF3B30]/30 rounded-xl p-6 relative">
+            <div className="bg-[#FF3B30]/5 backdrop-blur-md border border-[#FF3B30]/30 rounded-xl p-6 relative hover:z-50 transition-all">
               <TooltipIcon content="CÁLCULO: Deal de maior valor perdido com alto response_time." />
               <p className="text-sm font-semibold text-[#FF3B30] mb-2">Pior Caso Real</p>
               <p className="text-sm text-[#B8B8B8]">

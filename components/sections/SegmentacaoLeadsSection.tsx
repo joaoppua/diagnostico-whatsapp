@@ -11,19 +11,26 @@ interface SegmentCardProps {
     color: string;
     conversionRate: number;
     description: string;
-    tooltipContent: string;
+    metricId?: string;
 }
 
-function LeadSegmentCard({ label, count, percentage, color, conversionRate, description, tooltipContent }: SegmentCardProps) {
+function LeadSegmentCard({ label, count, percentage, color, conversionRate, description, metricId }: SegmentCardProps) {
     return (
-        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 relative flex flex-col h-full hover:border-[#FF5C35]/50 hover:-translate-y-1 transition-all duration-300">
-            <TooltipIcon content={tooltipContent} />
+        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6 relative flex flex-col h-full hover:border-[#FF5C35]/50 hover:-translate-y-1 transition-all duration-300 hover:z-50">
+            <TooltipIcon metricId={metricId} />
             <div className="flex justify-between items-start mb-4">
                 <span className="text-sm font-bold uppercase tracking-wider" style={{ color }}>{label}</span>
                 <span className="text-2xl font-bold text-white">{count}</span>
             </div>
             
             <div className="mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[#242424] overflow-hidden flex items-end">
+                     {/* Simplified bar visual just for structure preservation */}
+                    <div className="w-full" style={{ height: `${percentage}%`, backgroundColor: color }}></div>
+                </div>
+            </div>
+             {/* Reverting visual to original design but keeping hover:z-50 */}
+             <div className="mb-4 -mt-16 pt-16">
                 <div className="w-full h-1.5 bg-[#242424] rounded-full overflow-hidden">
                     <div className="h-full rounded-full" style={{ width: `${percentage}%`, backgroundColor: color }}></div>
                 </div>
@@ -60,7 +67,7 @@ export function SegmentacaoLeadsSection() {
             color="#FF5C35"
             conversionRate={hot.conversion}
             description="Perguntam preço, pedem detalhes, respondem rápido"
-            tooltipContent="CÁLCULO: Sistema classifica automaticamente. Critérios: menção de preço, urgência, engajamento alto."
+            metricId="segmentacao-leads"
           />
           <LeadSegmentCard
             label="Leads Mornos"
@@ -69,7 +76,7 @@ export function SegmentacaoLeadsSection() {
             color="#FFD60A"
             conversionRate={warm.conversion}
             description="Demonstram interesse, mas hesitam"
-            tooltipContent="CÁLCULO: Engajamento moderado, sem urgência clara."
+            metricId="segmentacao-leads"
           />
           <LeadSegmentCard
             label="Leads Frios"
@@ -78,7 +85,7 @@ export function SegmentacaoLeadsSection() {
             color="#0A84FF"
             conversionRate={cold.conversion}
             description="Apenas pesquisando, sem urgência"
-            tooltipContent="CÁLCULO: Baixo engajamento, respostas curtas."
+            metricId="segmentacao-leads"
           />
           <LeadSegmentCard
             label="Leads Fantasmas"
@@ -87,7 +94,7 @@ export function SegmentacaoLeadsSection() {
             color="#6B6B6B"
             conversionRate={ghost.conversion}
             description="Não respondem após primeira mensagem"
-            tooltipContent="CÁLCULO: 1 msg do buyer, seller respondeu, buyer não voltou."
+            metricId="segmentacao-leads"
           />
         </div>
         
@@ -96,7 +103,7 @@ export function SegmentacaoLeadsSection() {
           icon={<TrendingUp />}
           title="Padrão de Alta Conversão Identificado"
           description="Leads que mencionam 'quanto custa' na primeira mensagem convertem 67% mais. Priorize esses contatos."
-          tooltipContent="CÁLCULO: IA analisa padrões linguísticos em conversas fechadas."
+          metricId="segmentacao-leads"
         />
       </div>
     </section>

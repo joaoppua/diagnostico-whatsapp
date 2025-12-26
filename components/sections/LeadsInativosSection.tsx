@@ -5,8 +5,8 @@ import { TooltipIcon } from '../ui/TooltipIcon';
 
 function InactiveLeadCard({ name, daysInactive, lastMessage, value, recoveryScore, reason, priority }: any) {
     return (
-        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl p-6 border border-[#FF5C35]/20 hover:border-[#FF5C35]/50 transition-colors group relative">
-            <TooltipIcon content={`Motivo: ${reason}`} />
+        <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl p-6 border border-[#FF5C35]/20 hover:border-[#FF5C35]/50 transition-colors group relative hover:z-50">
+            <TooltipIcon metricId="leads-inativos" />
             <div className="flex justify-between items-start mb-4">
                 <div>
                     <h4 className="font-bold text-white text-lg">{name}</h4>

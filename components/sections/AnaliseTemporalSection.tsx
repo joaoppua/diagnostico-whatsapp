@@ -3,6 +3,7 @@ import { CheckCircle, AlertCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { InsightCard } from '../ui/InsightCard';
 import { mockData } from '../../data/mockData';
+import { TooltipIcon } from '../ui/TooltipIcon';
 
 export function AnaliseTemporalSection() {
   const periodData = [
@@ -24,7 +25,8 @@ export function AnaliseTemporalSection() {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Heatmap Simulation */}
-          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 hover:border-[#FF5C35]/40 transition-colors">
+          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 hover:border-[#FF5C35]/40 transition-colors relative">
+             <TooltipIcon metricId="heatmap-temporal" />
             <h3 className="text-2xl font-semibold mb-6 text-white">Mapa de Calor de Conversas</h3>
             <div className="h-80 flex flex-col justify-between">
                 {/* Simple Grid Representation for Heatmap */}
@@ -63,7 +65,7 @@ export function AnaliseTemporalSection() {
               icon={<CheckCircle />}
               title="Seu Melhor Horário"
               description={mockData.temporal.insights.bestTime}
-              tooltipContent="CÁLCULO: Cruza horário das mensagens com deals fechados. Identifica correlação horário × taxa_conversão."
+              metricId="heatmap-temporal"
             />
             
             <InsightCard
@@ -71,7 +73,7 @@ export function AnaliseTemporalSection() {
               icon={<AlertCircle />}
               title="Leads Ignorados"
               description={`Você ignora ${mockData.temporal.insights.ignoredLeads.percentage}% dos leads que chegam após 18h. Isso representa R$ ${mockData.temporal.insights.ignoredLeads.lostRevenue}/mês perdidos.`}
-              tooltipContent="CÁLCULO: Mensagens recebidas após 18h sem resposta no mesmo dia × ticket_médio."
+              metricId="receita-nao-capturada"
             />
             
             <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-6">

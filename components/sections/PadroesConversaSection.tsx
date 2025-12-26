@@ -24,7 +24,7 @@ export function PadroesConversaSection() {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 relative">
+          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 relative hover:z-50 transition-all">
             <TooltipIcon content="CÁLCULO: Contagem de mensagens enviadas pelo vendedor vs lead." />
             <h3 className="text-2xl font-semibold mb-6 text-white">Quem Fala Mais?</h3>
             <div className="h-64 relative">
@@ -59,8 +59,8 @@ export function PadroesConversaSection() {
             </p>
           </div>
           
-          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 relative">
-            <TooltipIcon content="CÁLCULO: Gatilhos que antecedem o silêncio do lead." />
+          <div className="bg-[#1A1A1A]/40 backdrop-blur-md rounded-2xl border border-[#FF5C35]/20 p-8 relative hover:z-50 transition-all">
+            <TooltipIcon content="CÁLCULO: Gatilhos que antecedem o silêncio do lead." metricId="objecoes" />
             <h3 className="text-2xl font-semibold mb-6 text-white">Padrões de Abandono</h3>
             <div className="space-y-6">
                 {mockData.conversationPatterns.abandonment.map((item, idx) => (
@@ -90,7 +90,7 @@ export function PadroesConversaSection() {
                 icon={<CheckCircle />}
                 title="Padrão de Sucesso"
                 description="Conversas com +5 perguntas do lead convertem 3x mais. Encoraje perguntas em vez de dar todas as informações."
-                tooltipContent="CÁLCULO: Análise de conversas aprovadas."
+                metricId="comunicacao-scores"
             />
         </div>
       </div>

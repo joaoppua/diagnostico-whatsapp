@@ -2,6 +2,8 @@ import { MockData } from '../types';
 
 export const mockData: MockData = {
   summary: {
+    analysisDate: "19 de dezembro de 2025 às 19:46",
+    analysisPeriod: "02 fev 2025 - 19 dez 2025",
     score: 47,
     label: "Precisa de Atenção Urgente",
     totalConversations: 180,

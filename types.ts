@@ -5,9 +5,8 @@ export interface MetricCardProps {
   label: string;
   value: string;
   subtitle: string;
-  trend: 'up' | 'down' | 'neutral';
-  trendValue?: string;
-  tooltipContent: string;
+  tooltipContent?: string;
+  metricId?: string;
 }
 
 export interface InsightCardProps {
@@ -16,15 +15,43 @@ export interface InsightCardProps {
   title: string;
   description: string;
   tooltipContent?: string;
+  metricId?: string;
 }
 
 export interface TooltipProps {
-  content: string;
+  content?: string;
+  metricId?: string;
+}
+
+export interface MetricRange {
+  min: number;
+  max: number | null;
+  label: string;
+  color: string;
+  message: string;
+}
+
+export interface MetricDoc {
+  id: string;
+  name: string;
+  shortDescription: string;
+  fullDescription: string;
+  calculation: {
+    formula: string;
+    dataSources: string[];
+    example: string;
+    pseudocode?: string;
+  };
+  llmPrompt?: string;
+  ranges?: MetricRange[];
+  implementationNotes?: string;
 }
 
 // Mock Data Types
 export interface MockData {
   summary: {
+    analysisDate: string;
+    analysisPeriod: string;
     score: number;
     label: string;
     totalConversations: number;

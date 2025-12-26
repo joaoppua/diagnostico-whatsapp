@@ -9,12 +9,12 @@ const colorMap = {
   info: { bg: 'bg-[#0A84FF]/5', border: 'border-[#0A84FF]/30', text: 'text-[#0A84FF]' },
 };
 
-export function InsightCard({ type, icon, title, description, tooltipContent }: InsightCardProps) {
+export function InsightCard({ type, icon, title, description, tooltipContent, metricId }: InsightCardProps) {
   const colors = colorMap[type];
   
   return (
-    <div className={`${colors.bg} backdrop-blur-md border ${colors.border} rounded-xl p-6 relative transition-all hover:bg-opacity-20`}>
-      {tooltipContent && <TooltipIcon content={tooltipContent} />}
+    <div className={`${colors.bg} backdrop-blur-md border ${colors.border} rounded-xl p-6 relative transition-all hover:bg-opacity-20 hover:z-50`}>
+      {(tooltipContent || metricId) && <TooltipIcon content={tooltipContent} metricId={metricId} />}
       
       <div className="flex items-start gap-3">
         <div className={`${colors.text} mt-1 shrink-0`}>
