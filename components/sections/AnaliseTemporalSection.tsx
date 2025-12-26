@@ -39,7 +39,7 @@ const HeatmapCell: React.FC<HeatmapCellProps> = ({ value, day, hour, isNight }) 
     return (
         <div className="relative group w-full pt-[100%]">
             <div 
-                className={`absolute inset-0 m-[2px] rounded-md transition-all duration-300 ease-out 
+                className={`absolute inset-0 rounded transition-all duration-300 ease-out 
                     ${colorClass} 
                     ${isPeak ? 'z-10 scale-105' : 'hover:border-white/20 border border-transparent'}
                     group-hover:scale-110 group-hover:z-20
@@ -114,29 +114,27 @@ export function AnaliseTemporalSection() {
 
             <div className="w-full overflow-x-auto custom-scrollbar pb-2">
                 <div className="min-w-[600px]">
-                    {/* Header Horas */}
-                    <div className="grid grid-cols-[40px_repeat(15,_1fr)] gap-1 mb-2">
+                    {/* Grid Único para Cabeçalho e Dados - Garante alinhamento e espaçamento perfeito */}
+                    <div className="grid grid-cols-[40px_repeat(15,_1fr)] gap-2">
+                        
+                        {/* Header Row */}
                         <div className="text-[10px] text-[#555] font-mono flex items-end justify-center pb-1">DIA</div>
                         {hours.map(h => (
-                            <div key={h} className={`text-[10px] font-mono font-bold flex items-end justify-center pb-1 ${h >= 18 ? 'text-[#FF3B30]' : 'text-[#808080]'}`}>
+                            <div key={`h-${h}`} className={`text-[10px] font-mono font-bold flex items-end justify-center pb-1 ${h >= 18 ? 'text-[#FF3B30]' : 'text-[#808080]'}`}>
                                 {h}h
                             </div>
                         ))}
-                    </div>
 
-                    {/* Grid de Células */}
-                    <div className="space-y-1 relative">
+                        {/* Data Rows */}
                         {days.map((day, dIdx) => (
-                            <div key={day} className="grid grid-cols-[40px_repeat(15,_1fr)] gap-1 items-center">
-                                <div className="text-[10px] font-bold text-[#555] uppercase tracking-wider">{day}</div>
+                            <React.Fragment key={day}>
+                                <div className="text-[10px] font-bold text-[#555] uppercase tracking-wider flex items-center">{day}</div>
                                 {hours.map((h, hIdx) => {
                                     const isNight = h >= 18;
                                     let value = mockData.temporal.heatmap[dIdx * 13 + (hIdx % 13)]?.value || Math.floor(Math.random() * 95);
                                     
-                                    // Manipulação visual para criar contraste claro entre Cinza e Laranja
-                                    // Segunda e Terça com picos claros
+                                    // Manipulação visual
                                     if ((day === 'Seg' || day === 'Ter') && (h >= 10 && h <= 14)) value = Math.max(value, 80);
-                                    // Fim de semana "apagado" (cinza)
                                     if (day === 'Dom') value = Math.min(value, 20);
 
                                     return (
@@ -149,7 +147,7 @@ export function AnaliseTemporalSection() {
                                         />
                                     )
                                 })}
-                            </div>
+                            </React.Fragment>
                         ))}
                     </div>
                 </div>
